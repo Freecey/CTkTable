@@ -7,8 +7,8 @@ def get_long_description(path):
     return text
 
 setup(
-    name = 'CTkTable_cust',
-    version = '1.1a',
+    name = 'CTkTable',
+    version = '1.1',
     description = "Customtkinter Table widget",
     license = "MIT",
     readme = "README.md",
