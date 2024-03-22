@@ -25,6 +25,7 @@ class CTkTable(customtkinter.CTkFrame):
         text_color: str or tuple = None,
         border_color: str or tuple = None,
         font: tuple = None,
+        header_text_color: str or tuple = None,
         header_color: str or tuple = None,
         corner_radius: int = 25,
         write: str = False,
@@ -51,6 +52,7 @@ class CTkTable(customtkinter.CTkFrame):
         self.command = command
         self.values = values # the default values of the table
         self.colors = colors # colors of the table if required
+        self.header_text_color = header_text_color # specify the topmost row text color
         self.header_color = header_color # specify the topmost row color
         self.phase = color_phase
         self.corner = corner_radius
@@ -109,6 +111,15 @@ class CTkTable(customtkinter.CTkFrame):
                         fg = self.fg_color
                     else:
                         fg = self.fg_color2
+
+                if self.header_text_color:
+                    if self.orient=="horizontal":
+                        if i==0:
+                            fg = self.header_text_color
+                    else:
+                        if j==0:
+                            fg = self.header_text_color
+
                         
                 if self.header_color:
                     if self.orient=="horizontal":
@@ -471,9 +482,13 @@ class CTkTable(customtkinter.CTkFrame):
         if self.orient!="horizontal":
             if self.header_color:
                 self.edit_column(0, fg_color=self.header_color)
+            if self.header_text_color:
+                self.edit_column(0, text_color=self.header_text_color)
         else:
             if self.header_color:
                 self.edit_row(0, fg_color=self.header_color)
+            if self.header_text_color:
+                self.edit_row(0, text_color=self.header_text_color)
         return self.get_row(row)
     
     def select_column(self, column):
@@ -482,9 +497,13 @@ class CTkTable(customtkinter.CTkFrame):
         if self.orient!="horizontal":
             if self.header_color:
                 self.edit_column(0, fg_color=self.header_color)
+            if self.header_text_color:
+                self.edit_column(0, text_color=self.header_text_color)
         else:
             if self.header_color:
                 self.edit_row(0, fg_color=self.header_color)
+            if self.header_text_color:
+                self.edit_row(0, text_color=self.header_text_color)
         return self.get_column(column)
     
     def deselect_row(self, row):
@@ -493,9 +512,13 @@ class CTkTable(customtkinter.CTkFrame):
         if self.orient!="horizontal":
             if self.header_color:
                 self.edit_column(0, fg_color=self.header_color)
+            if self.header_text_color:
+                self.edit_column(0, text_color=self.header_text_color)
         else:
             if self.header_color:
                 self.edit_row(0, fg_color=self.header_color)
+            if self.header_text_color:
+                self.edit_row(0, text_color=self.header_text_color)
                 
     def deselect_column(self, column):
         """ deselect an entire column """
@@ -504,9 +527,13 @@ class CTkTable(customtkinter.CTkFrame):
         if self.orient!="horizontal":
             if self.header_color:
                 self.edit_column(0, fg_color=self.header_color)
+            if self.header_text_color:
+                self.edit_column(0, text_color=self.header_text_color)
         else:
             if self.header_color:
                 self.edit_row(0, fg_color=self.header_color)
+            if self.header_text_color:
+                self.edit_row(0, text_color=self.header_text_color)
 
     def select(self, row, column):
         """ select any cell """
@@ -603,6 +630,8 @@ class CTkTable(customtkinter.CTkFrame):
         if "bg_color" in kwargs:
             super().configure(bg_color=kwargs["bg_color"])
             self.inside_frame.configure(fg_color=kwargs["bg_color"])
+        if "header_text_color" in kwargs:
+            self.header_text_color = kwargs.pop("header_text_color")
         if "header_color" in kwargs:
             self.header_color = kwargs.pop("header_color")
         if "rows" in kwargs:
@@ -680,6 +709,8 @@ class CTkTable(customtkinter.CTkFrame):
             return self.padx
         if param=="pady":
             return self.pady
+        if param=="header_text_color":
+            return self.header_text_color
         if param=="header_color":
             return self.header_color
         if param=="row":
