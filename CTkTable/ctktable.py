@@ -122,12 +122,8 @@ class CTkTable(customtkinter.CTkFrame):
 
                         
                 if self.header_color:
-                    if self.orient=="horizontal":
-                        if i==0:
-                            fg = self.header_color
-                    else:
-                        if j==0:
-                            fg = self.header_color
+                    if i==0 or j==0:
+                        fg = self.header_color
 
                 corner_radius = self.corner
                 if (self.border_width>=5) and (self.corner>=5):
